@@ -1,62 +1,100 @@
-/**
-* ControlP5 Textfield
-*
-*
-* find a list of public methods available for the Textfield Controller
-* at the bottom of this sketch.
-*
-* by Andreas Schlegel, 2012
-* www.sojamo.de/libraries/controlp5
-*
+/*
+  Gui by augustus soto
 */
-
-
 import controlP5.*;
 
+//Variable definitions and intializations
 ControlP5 angle_input;
-
+ControlP5 buttons;
 String textValue = "";
 
 void setup() 
   {
+    //Size, fonts, window resize
     size(720,540);
-    PFont font = createFont("arial",20);
+    PFont font = createFont("arial",15);
     surface.setResizable(true);
-    
-    
-    //Creating controlp5 object?
+    buttons = new ControlP5(this);
     angle_input = new ControlP5(this);
+    
+    //BUTTONS
+    buttons.addButton("New Window")
+    .setFont(font)
+    .setValue(100)
+    .setPosition(20,80)
+    .setSize(200,25)
+    ;
+    
+    buttons.addButton("Clear angles")
+    .setFont(font)
+    .setValue(100)
+    .setPosition(20,120)
+    .setSize(200,25)
+    ;
+    
+    buttons.addButton("Clear Logs")
+    .setFont(font)
+    .setValue(100)
+    .setPosition(20,160)
+    .setSize(200,25)
+    ;
+    
+     buttons.addButton("Reset arrow")
+    .setFont(font)
+    .setValue(100)
+    .setPosition(20,200)
+    .setSize(200,25)
+    ;
+    
+    /* example code
+  import controlP5.*;
+ 
+ControlP5 cp5;
+ 
+void setup() {
+  size(400, 600);
+ 
+  cp5 = new ControlP5(this);
+ 
+  cp5.addButton("Button")
+    .setValue(1)
+    .setPosition(100, 100)
+    .setSize(200, 19)
+    ;
+}
+ 
+void draw() {
+  background(255);
+}
+ 
+void Button(float theValue) {
+  println("got a button press",theValue);
+}
+    */
   
-    //Text field 1
-    angle_input.addTextfield("input")
+    //INPUT TEXT
+    angle_input.addTextfield("INPUT")
        .setPosition(20,20)
-       .setSize(200,40) //x, y size
+       .setSize(200,30) //x, y size
        .setFont(font)
+       .setAutoClear(true) //auto set to true
        .setFocus(true) //no clue wtf this does
        .setColor(color(255,0,0))
        ;
-                   
-    //Text field 2
-    angle_input.addTextfield("textValue")
-       .setPosition(20,170)
-       .setSize(200,40)
-       .setFont(createFont("arial",20))
-       .setAutoClear(false) //auto set to true
-       ;
-  
-    //Button that clears text field
-    angle_input.addBang("clear")
+       
+       
+    /*
+     * A bang triggers an event that can be received by a function named after the bang.
+     * By default a bang is triggered when pressed, this can be changed to 'release' 
+     * using theBang.setTriggerEvent(Bang.RELEASE).
+
+    angle_input.addBang("clear") //goes to clear function
        .setPosition(240,170)
        .setSize(80,40)
        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
        ;    
-    
-    //deafult text field
-    angle_input.addTextfield("default")
-       .setPosition(20,350)
-       .setAutoClear(false)
-       ;
-    
+     */
+
     textFont(font);
   }
 
@@ -64,8 +102,7 @@ void draw()
   {
     background(0);
     fill(255);
-    text(angle_input.get(Textfield.class,"input").getText(), 360,130);
-    text(textValue, 360,180);
+    runningTimer();
   }
 
 public void clear() 
@@ -74,15 +111,15 @@ public void clear()
   }
 
 void controlEvent(ControlEvent theEvent) 
-{
-  if(theEvent.isAssignableFrom(Textfield.class)) 
-    {
-      println("controlEvent: accessing a string from controller '"
-              +theEvent.getName()+"': "
-              +theEvent.getStringValue()
-              );
-    }
-}
+  {
+    if(theEvent.isAssignableFrom(Textfield.class)) 
+      {
+        println("controlEvent: accessing a string from controller '"
+                +theEvent.getName()+"': "
+                +theEvent.getStringValue()
+                );
+      }
+  }
 
 public void input(String theText) 
   {
@@ -90,9 +127,14 @@ public void input(String theText)
     println("a textfield event for controller 'input' : "+theText);
   }
 
-
-
-
+public void runningTimer()
+  {
+    int s = second(); 
+    int m = minute(); 
+    int h = hour(); 
+    fill(255);
+    text("System time: " + h + ":" + m + ":" + s, 550,25);
+  }
 /*
 a list of all methods available for the Textfield Controller
 use ControlP5.printPublicMethodsFor(Textfield.class);
