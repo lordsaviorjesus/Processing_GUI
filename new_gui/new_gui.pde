@@ -1,11 +1,17 @@
 /*
   Gui by augustus soto
 */
+
+
 import controlP5.*;
 
-//Variable definitions and intializations
+StringList animals;
 ControlP5 angle_input;
 ControlP5 buttons;
+ControlP5 logz;
+Textarea displayLogs;
+
+
 String textValue = "";
 
 void setup() 
@@ -14,11 +20,13 @@ void setup()
     size(720,540);
     PFont font = createFont("arial",15);
     surface.setResizable(true);
+ 
+    animals = new StringList();
     buttons = new ControlP5(this);
     angle_input = new ControlP5(this);
-    
-    //BUTTONS
+    logz = new ControlP5(this);
 
+    //BUTTONS
     buttons.addButton("Window")
     .setFont(font)
     .setValue(100)
@@ -46,19 +54,51 @@ void setup()
     .setPosition(20,200)
     .setSize(200,25)
     ;
-        //INPUT TEXT
+
+   //INPUT TEXT
     angle_input.addTextfield("INPUT")
        .setPosition(20,20)
        .setSize(200,30) //x, y size
        .setFont(font)
-       .setAutoClear(true) //auto set to true
+       .setAutoClear(true) //auto set to true, not necessary to call
        .setFocus(true) //no clue wtf this does
        .setColor(color(255,0,0))
        ;
+  //Text Area
+    displayLogs = logz.addTextarea("logs")
+                    .setPosition(250,20)
+                    .setSize(290,200)
+                    .setFont(createFont("arial", 16))
+                    .setColor(color(128))
+                    .setColorBackground(color(255,100))
+                    .setColorForeground(color(255,100));
+                    ;
+ 
     textFont(font);
-
   }
-  
+
+String printAnimals(StringList animals)
+  {
+    String mystring = "";
+    for (int i = 0; i < animals.size(); i++)
+
+      {
+       mystring = mystring + " " + animals.get(i);
+      }
+    return mystring;
+  }
+
+void draw() 
+  {
+    background(0);
+    fill(255);
+    runningTimer();
+    displayLogs.setText(printAnimals(animals));
+ 
+    
+  }
+
+//===========================Functions============================//
   void Window(float theValue) 
     {
       println("window pressed - ", theValue);
@@ -75,69 +115,28 @@ void setup()
     {
       println("reset pressed - ", theValue);
     }
-    
-    
-    
-    /* example code
-  import controlP5.*;
- 
-ControlP5 cp5;
- 
-void setup() {
-  size(400, 600);
- 
-  cp5 = new ControlP5(this);
- 
-  cp5.addButton("Button")
-    .setValue(1)
-    .setPosition(100, 100)
-    .setSize(200, 19)
-    ;
-}
-void draw() {
-  background(255);
-}
+  void INPUT(String theValue)
+    {
+      println("input typed - " + theValue);
+      animals.append(theValue);
+    }
 
-void Button(float theValue) {
-  println("got a button press",theValue);
-}
-    */
+  
+//=================================ARROW===============================//
 
-
-
-void draw() 
+public void drawArrow(int cx, int cy, int len, float angle)
   {
-    background(0);
-    fill(255);
-    runningTimer();
-  }
-
-//from a button that clears clear button
-public void clear() 
-  {
-    angle_input.get(Textfield.class,"textValue").clear();
-  }
-
-
-
-void controlEvent(ControlEvent theEvent) 
-  {
-    if(theEvent.isAssignableFrom(Textfield.class)) 
-      {
-        println("controlEvent: accessing a string from da controller '"
-                +theEvent.getName()+"': "
-                +theEvent.getStringValue()
-                );
-      }
+    pushMatrix();
+    translate(cx, cy);
+    rotate(radians(angle));
+    line(0,0,len, 0);
+    line(len, 0, len - 8, -8);
+    line(len, 0, len - 8, 8);
+    popMatrix();
   }
 
 
 //=================================TIMER===============================//
-public void input(String theText) 
-  {
-    // automatically receives results from controller input
-    println("a textfield event for controller 'input' : "+theText);
-  }
 
 public void runningTimer()
   {
@@ -147,4 +146,30 @@ public void runningTimer()
     fill(255);
     text("System time: " + h + ":" + m + ":" + s, 550,25);
   }
-  
+
+
+
+
+
+
+
+
+//=================================IGNORE===============================//
+  /*
+    //from a button that clears clear button
+public void clear() 
+  {
+    angle_input.get(Textfield.class,"textValue").clear();
+  }
+
+//Detects entire textfield class
+
+void controlEvent(ControlEvent theEvent) 
+  {
+    if(theEvent.isAssignableFrom(Textfield.class)) 
+      {
+        println("controlEvent: accessing a string from da controller '"
+                +theEvent.getName() + "': " + theEvent.getStringValue());
+      }
+  }
+*/
