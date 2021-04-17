@@ -6,10 +6,13 @@
 import controlP5.*;
 
 StringList animals;
+int deg_angle;
+
 ControlP5 angle_input;
 ControlP5 buttons;
 ControlP5 logz;
 Textarea displayLogs;
+
 
 
 String textValue = "";
@@ -76,7 +79,7 @@ void setup()
  
     textFont(font);
   }
-
+/*
 String printAnimals(StringList animals)
   {
     String mystring = "";
@@ -87,13 +90,13 @@ String printAnimals(StringList animals)
       }
     return mystring;
   }
-
+*/
 void draw() 
   {
     background(0);
     fill(255);
     runningTimer();
-    displayLogs.setText(printAnimals(animals));
+    //displayLogs.setText(printAnimals(animals));
  
     
   }
@@ -115,10 +118,19 @@ void draw()
     {
       println("reset pressed - ", theValue);
     }
-  void INPUT(String theValue)
+  void INPUT(String raw_angle)
     {
-      println("input typed - " + theValue);
-      animals.append(theValue);
+      println("input registered", raw_angle);
+      float rad_angle = Float.valueOf(raw_angle);
+      deg_angle = int((180/3.14) * rad_angle);
+      println("degree int value is - ", deg_angle);
+      updateAnimals(deg_angle);
+    }
+
+  void updateAnimals(Integer degree)
+    {
+      animals.append("Animal ID found at " + String.valueOf(degree));
+      println(animals);
     }
 
   
