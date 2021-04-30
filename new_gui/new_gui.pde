@@ -5,8 +5,9 @@
 
 import controlP5.*;
 
-ArrayList animals;
+StringList animals;
 int deg_angle;
+String update_text = "";
 
 ControlP5 angle_input;
 ControlP5 buttons;
@@ -22,7 +23,7 @@ void setup()
     PFont font = createFont("arial",15);
     surface.setResizable(true);
  
-    animals = new String[];
+    animals = new StringList();
     buttons = new ControlP5(this);
     angle_input = new ControlP5(this);
     logz = new ControlP5(this);
@@ -73,7 +74,7 @@ void setup()
                     .setColor(color(128))
                     .setColorBackground(color(255,100))
                     .setColorForeground(color(255,100))
-                    .setText("Hello")
+                   // .setText(update_text);
                     ;
                     
     textFont(font);
@@ -95,6 +96,7 @@ void draw()
     background(0);
     fill(255);
     runningTimer();
+    displayLogs.setText(update_text);
     //displayLogs.setText(printAnimals(animals));
  
     
@@ -128,8 +130,12 @@ void draw()
 
   void updateAnimals(Integer degree)
     {
-      animals.add("Animal ID found at " + String.valueOf(degree));
-      String update_text = join(animals, " ,");
+      animals.append("Animal ID found at " + String.valueOf(degree));
+      
+      update_text = String.join(", ", animals);
+      
+      
+      
       
     }
 
