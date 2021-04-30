@@ -123,16 +123,18 @@ void draw()
 //===========================Functions============================//
   void Export(float theValue) 
     {
-
-      for (int i = 0; i < degrees.size(); i++)
+      if (degrees.size() > 0)
         {
-          output.println(degrees.get(i));
+        for (int i = 0; i < degrees.size(); i++)
+          {
+            output.println(degrees.get(i));
+          }
+          
+          output.flush();
+          output.close();
+          exit();
+          
         }
-      
-      output.flush();
-      output.close();
-      exit();
-      
     }
   void Logs(float theValue)
     {
