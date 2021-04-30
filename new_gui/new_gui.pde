@@ -13,6 +13,8 @@ ControlP5 angle_input;
 ControlP5 buttons;
 ControlP5 logz;
 Textarea displayLogs;
+ControlP5 degValues;
+Textarea displayDegrees;
 
 String textValue = "";
 
@@ -23,6 +25,7 @@ void setup()
     PFont font = createFont("arial",15);
     surface.setResizable(true);
  
+    degValues = new ControlP5(this);
     animals = new StringList();
     buttons = new ControlP5(this);
     angle_input = new ControlP5(this);
@@ -68,7 +71,7 @@ void setup()
        ;
   //Text Area
     displayLogs = logz.addTextarea("logs")
-                    .setPosition(250,20)
+                    .setPosition(250,40)
                     .setSize(290,200)
                     .setFont(createFont("arial", 16))
                     .setColor(color(128))
@@ -77,6 +80,14 @@ void setup()
                    // .setText(update_text);
                     ;
                     
+    displayDegrees = degValues.addTextarea("degrees")
+                    .setPosition(560, 40)
+                    .setSize(140,200)
+                    .setFont(createFont("arial", 16))
+                    .setColor(color(128))
+                    .setColorBackground(color(255,100))
+                    .setColorForeground(color(255,100))
+                    ;
     textFont(font);
   }
 /*
@@ -117,12 +128,15 @@ void draw()
     }
   void Reset(float theValue)
     {
-      println("reset pressed - ", theValue);
+      update_text = ("");
+      displayLogs.setText(update_text);
+      //println("reset pressed - ", theValue);
     }
   void INPUT(String raw_angle)
     {
       println("input registered", raw_angle);
       float rad_angle = Float.valueOf(raw_angle);
+      //deg_angle used for arrow
       deg_angle = int((180/3.14) * rad_angle);
       println("degree int value is - ", deg_angle);
       updateAnimals(deg_angle);
@@ -131,12 +145,7 @@ void draw()
   void updateAnimals(Integer degree)
     {
       animals.append("Animal ID found at " + String.valueOf(degree));
-      
       update_text = String.join(", ", animals);
-      
-      
-      
-      
     }
 
   
