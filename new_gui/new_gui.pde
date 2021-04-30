@@ -1,6 +1,6 @@
 /*
-  Gui by augustus soto
-*/
+ * Gui by augustus soto
+ */
 
 import controlP5.*;
 
