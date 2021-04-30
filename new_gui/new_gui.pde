@@ -2,17 +2,18 @@
   Gui by augustus soto
 */
 
-
 import controlP5.*;
 
+//Processing definitions
 StringList animals;
 StringList degrees;
-
 int deg_angle;
 String update_text = "";
 String update_degtext = "";
 PrintWriter output;
+String textValue = "";
 
+//ControlP5 definitions
 ControlP5 angle_input;
 ControlP5 buttons;
 ControlP5 logz;
@@ -20,8 +21,8 @@ Textarea displayLogs;
 ControlP5 degValues;
 Textarea displayDegrees;
 
-String textValue = "";
 
+//========================SETUP==========================//
 void setup() 
   {
     size(720,540);
@@ -101,7 +102,8 @@ void setup()
                     ;
     textFont(font);
   }
-
+  
+//========================DRAW==========================//
 void draw() 
   {
     background(0);
@@ -120,7 +122,11 @@ void draw()
     drawArrow(350,350, 80, deg_angle);
   }
 
-//===========================Functions============================//
+//===========================FUNCTIONS============================//
+/* Every function activates when the button correseponding with it's name is
+ * pressed. This is how ControlP5 works.
+ *
+ */
   void Export(float theValue) 
     {
       if (degrees.size() > 0)
@@ -129,13 +135,12 @@ void draw()
           {
             output.println(degrees.get(i));
           }
-          
           output.flush();
           output.close();
           exit();
-          
         }
     }
+
   void Logs(float theValue)
     {
       //reset animal log
@@ -143,6 +148,7 @@ void draw()
       update_text = ("");
       displayLogs.setText(update_text);
     }
+
   void Angles(float theValue)
     {
       degrees.clear();
