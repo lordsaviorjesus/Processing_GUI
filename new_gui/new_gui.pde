@@ -6,8 +6,12 @@
 import controlP5.*;
 
 StringList animals;
+StringList degrees;
+
 int deg_angle;
 String update_text = "";
+String update_degtext = "";
+PrintWriter output;
 
 ControlP5 angle_input;
 ControlP5 buttons;
@@ -20,19 +24,23 @@ String textValue = "";
 
 void setup() 
   {
-    //Size, fonts, window resize
     size(720,540);
     PFont font = createFont("arial",15);
     surface.setResizable(true);
+    
+    output = createWriter("degrees.txt");
+    
+    //INITIALIZE
  
-    degValues = new ControlP5(this);
     animals = new StringList();
+    degrees = new StringList();
     buttons = new ControlP5(this);
     angle_input = new ControlP5(this);
     logz = new ControlP5(this);
+    degValues = new ControlP5(this);
 
     //BUTTONS
-    buttons.addButton("Window")
+    buttons.addButton("Export")
     .setFont(font)
     .setValue(100)
     .setPosition(20,80)
@@ -69,7 +77,8 @@ void setup()
        .setFocus(true) //no clue wtf this does
        .setColor(color(255,0,0))
        ;
-  //Text Area
+   
+   //LOG TEXT
     displayLogs = logz.addTextarea("logs")
                     .setPosition(250,40)
                     .setSize(290,200)
@@ -79,67 +88,96 @@ void setup()
                     .setColorForeground(color(255,100))
                    // .setText(update_text);
                     ;
-                    
-    displayDegrees = degValues.addTextarea("degrees")
+    
+    //DEGREE TEXT   
+    displayDegrees = degValues.addTextarea("my_degrees")
                     .setPosition(560, 40)
                     .setSize(140,200)
                     .setFont(createFont("arial", 16))
                     .setColor(color(128))
                     .setColorBackground(color(255,100))
                     .setColorForeground(color(255,100))
+                    .setText("test")
                     ;
     textFont(font);
   }
-/*
-String printAnimals(StringList animals)
-  {
-    String mystring = "";
-    for (int i = 0; i < animals.size(); i++)
 
-      {
-       mystring = mystring + " " + animals.get(i);
-      }
-    return mystring;
-  }
-*/
 void draw() 
   {
     background(0);
     fill(255);
-    runningTimer();
-    displayLogs.setText(update_text);
-    //displayLogs.setText(printAnimals(animals));
- 
     
+    //System clock
+    runningTimer();
+    
+    //Text area updates
+    displayLogs.setText(update_text);
+    displayDegrees.setText(update_degtext);
+    
+    //Arrow on screen
+    fill(130);
+    rect(250,250,200,200);
+    drawArrow(350,350, 80, deg_angle);
   }
 
 //===========================Functions============================//
-  void Window(float theValue) 
+  void Export(float theValue) 
     {
-      println("window pressed - ", theValue);
+
+      for (int i = 0; i < degrees.size(); i++)
+        {
+          output.println(degrees.get(i));
+        }
+      
+      output.flush();
+      output.close();
+      exit();
+      
     }
   void Logs(float theValue)
     {
-      println("Logs pressed - ", theValue);
+      //reset animal log
+      animals.clear();
+      update_text = ("");
+      displayLogs.setText(update_text);
     }
   void Angles(float theValue)
     {
-      println("angles pressed - ", theValue);
+      degrees.clear();
+      update_degtext = ("");
+      displayDegrees.setText(update_degtext);
     }
   void Reset(float theValue)
     {
+      println("reset pressed");
+      
+      //reset animal log
+      animals.clear();
       update_text = ("");
       displayLogs.setText(update_text);
-      //println("reset pressed - ", theValue);
+      
+      //Reset degrees
+      degrees.clear();
+      update_degtext = ("");
+      displayDegrees.setText(update_degtext);
+      
+      //Reset arrow
+      deg_angle = 0;
+      drawArrow(350,350, 80, deg_angle);
     }
   void INPUT(String raw_angle)
     {
-      println("input registered", raw_angle);
-      float rad_angle = Float.valueOf(raw_angle);
       //deg_angle used for arrow
+      float rad_angle = Float.valueOf(raw_angle);
       deg_angle = int((180/3.14) * rad_angle);
-      println("degree int value is - ", deg_angle);
+      
+      //updating animal and degree lists
       updateAnimals(deg_angle);
+      updateDegrees(deg_angle);
+      
+      //println("degree int value is - ", deg_angle);
+      //println("input registered", raw_angle);
+      //println(update_degtext);
     }
 
   void updateAnimals(Integer degree)
@@ -148,6 +186,11 @@ void draw()
       update_text = String.join(", ", animals);
     }
 
+  void updateDegrees(Integer degree)
+    {
+     degrees.append(String.valueOf(degree));
+     update_degtext = String.join(", ", degrees);
+    }
   
 //=================================ARROW===============================//
 
@@ -162,7 +205,6 @@ public void drawArrow(int cx, int cy, int len, float angle)
     popMatrix();
   }
 
-
 //=================================TIMER===============================//
 
 public void runningTimer()
@@ -173,13 +215,6 @@ public void runningTimer()
     fill(255);
     text("System time: " + h + ":" + m + ":" + s, 550,25);
   }
-
-
-
-
-
-
-
 
 //=================================IGNORE===============================//
   /*
