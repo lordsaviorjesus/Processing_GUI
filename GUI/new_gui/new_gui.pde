@@ -12,6 +12,10 @@ String update_text = "";
 String update_degtext = "";
 PrintWriter output;
 String textValue = "";
+int count = 0;
+
+PWindow win;
+
 
 //ControlP5 definitions
 ControlP5 angle_input;
@@ -68,7 +72,14 @@ void setup()
     .setPosition(20,200)
     .setSize(200,25)
     ;
-
+    
+    buttons.addButton("window")
+    .setFont(font)
+    .setValue(100)
+    .setPosition(20,240)
+    .setSize(200,25)
+    ;
+    
    //INPUT TEXT
     angle_input.addTextfield("INPUT")
        .setPosition(20,20)
@@ -137,10 +148,19 @@ void draw()
           }
           output.flush();
           output.close();
-          exit();
+          exit(); //this is optional
         }
     }
-
+  void window()
+    {
+      count += 1;
+    if (count == 2)
+      {
+      if(win == null) win = new PWindow();
+      count = 1;
+      }
+      
+    }
   void Logs(float theValue)
     {
       //reset animal log
@@ -224,22 +244,49 @@ public void runningTimer()
     text("System time: " + h + ":" + m + ":" + s, 550,25);
   }
 
-//=================================IGNORE===============================//
-  /*
-    //from a button that clears clear button
-public void clear() 
+class PWindow extends PApplet 
+{
+  //No clue how this works, it just do
+  PWindow() 
   {
-    angle_input.get(Textfield.class,"textValue").clear();
+    super();
+    PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, this);
   }
+  
+  ControlP5 demoButton;
+  
 
-//Detects entire textfield class
+  void setup() 
+    {
 
-void controlEvent(ControlEvent theEvent) 
-  {
-    if(theEvent.isAssignableFrom(Textfield.class)) 
-      {
-        println("controlEvent: accessing a string from da controller '"
-                +theEvent.getName() + "': " + theEvent.getStringValue());
-      }
-  }
-*/
+      demoButton = new ControlP5(this);
+        demoButton.addButton("demo")
+          .setPosition(20,20)
+          .setSize(100,30)
+          ;
+      background(150);
+      surface.setResizable(true);
+    }
+
+  void demo()
+    {
+      println("demo button was pressed");
+      
+    }
+  void draw()
+    {
+      background(0);
+      ellipse(mouseX, mouseY, 10, 10);
+    }
+
+  void mousePressed() 
+    {
+     // println("mousePressed in secondary window");
+    }
+  
+  void exit()
+    {
+      dispose();
+      win = null;
+    }
+}
