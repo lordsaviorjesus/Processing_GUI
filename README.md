@@ -1,6 +1,7 @@
 PROCESSING GUI - WILDLIFE TRACKING PROJECT
 
 Gui.pde file location:
+
 GUI > new_gui > new_gui.pde
 
 Description:
