@@ -7,15 +7,13 @@ import controlP5.*;
 //Processing definitions
 StringList animals;
 StringList degrees;
-int deg_angle;
 String update_text = "";
 String update_degtext = "";
-PrintWriter output;
 String textValue = "";
+PrintWriter output;
+int deg_angle;
 int count = 0;
-
 PWindow win;
-
 
 //ControlP5 definitions
 ControlP5 angle_input;
@@ -32,11 +30,9 @@ void setup()
     size(720,540);
     PFont font = createFont("arial",15);
     surface.setResizable(true);
-    
-    output = createWriter("degrees.txt");
-    
-    //INITIALIZE
- 
+    output = createWriter("degrees.txt"); //File I/O
+
+    //INITIALIZING CONTROL P5
     animals = new StringList();
     degrees = new StringList();
     buttons = new ControlP5(this);
@@ -66,7 +62,7 @@ void setup()
     .setSize(200,25)
     ;
     
-     buttons.addButton("Reset")
+    buttons.addButton("Reset")
     .setFont(font)
     .setValue(100)
     .setPosition(20,200)
@@ -135,32 +131,32 @@ void draw()
 
 //===========================FUNCTIONS============================//
 /* Every function activates when the button correseponding with it's name is
- * pressed. This is how ControlP5 works.
+ * pressed. This is how handlers work in ControlP5.
  *
  */
-  void Export(float theValue) 
+  void Export(float theValue) //Used for File I/O
     {
-      if (degrees.size() > 0)
+      if (degrees.size() > 0) //Making sure list not 0
         {
         for (int i = 0; i < degrees.size(); i++)
           {
-            output.println(degrees.get(i));
+            output.println(degrees.get(i)); //For each item, writing to a line in txt file.
           }
           output.flush();
           output.close();
-          exit(); //this is optional
+          exit(); //this is optional; exit() stops the GUI
         }
     }
   void window()
     {
-      count += 1;
+    count += 1;
     if (count == 2)
       {
       if(win == null) win = new PWindow();
       count = 1;
       }
-      
     }
+
   void Logs(float theValue)
     {
       //reset animal log
@@ -175,11 +171,12 @@ void draw()
       update_degtext = ("");
       displayDegrees.setText(update_degtext);
     }
+
   void Reset(float theValue)
     {
       println("reset pressed");
       
-      //reset animal log
+      //Reset animal log
       animals.clear();
       update_text = ("");
       displayLogs.setText(update_text);
@@ -188,7 +185,7 @@ void draw()
       degrees.clear();
       update_degtext = ("");
       displayDegrees.setText(update_degtext);
-      
+
       //Reset arrow
       deg_angle = 0;
       drawArrow(350,350, 80, deg_angle);
@@ -220,8 +217,6 @@ void draw()
      update_degtext = String.join(", ", degrees);
     }
   
-//=================================ARROW===============================//
-
 public void drawArrow(int cx, int cy, int len, float angle)
   {
     pushMatrix();
@@ -233,8 +228,6 @@ public void drawArrow(int cx, int cy, int len, float angle)
     popMatrix();
   }
 
-//=================================TIMER===============================//
-
 public void runningTimer()
   {
     int s = second(); 
@@ -244,46 +237,42 @@ public void runningTimer()
     text("System time: " + h + ":" + m + ":" + s, 550,25);
   }
 
+//================POP-UP WINDOW==================//
 class PWindow extends PApplet 
 {
-  //No clue how this works, it just do
-  PWindow() 
+  PWindow()
   {
     super();
     PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, this);
   }
-  
-  ControlP5 demoButton;
-  
 
+  ControlP5 demoButton;
   void setup() 
     {
-
       demoButton = new ControlP5(this);
-        demoButton.addButton("demo")
+      demoButton.addButton("demo")
           .setPosition(20,20)
           .setSize(100,30)
           ;
       background(150);
       surface.setResizable(true);
     }
-
   void demo()
     {
       println("demo button was pressed");
-      
     }
+
   void draw()
     {
       background(0);
-      ellipse(mouseX, mouseY, 10, 10);
+      ellipse(mouseX, mouseY, 10, 10); //Tracks mouse
     }
 
-  void mousePressed() 
-    {
+  //void mousePressed() 
+    //{
      // println("mousePressed in secondary window");
-    }
-  
+   // }
+
   void exit()
     {
       dispose();
