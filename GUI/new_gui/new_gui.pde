@@ -2,6 +2,7 @@
  * Gui by augustus soto
  */
 
+//=================================VARIABLES==================================//
 import controlP5.*;
 
 //Processing definitions
@@ -24,7 +25,7 @@ ControlP5 degValues;
 Textarea displayDegrees;
 
 
-//========================SETUP==========================//
+//====================================SETUP===================================//
 void setup() 
   {
     size(720,540);
@@ -42,155 +43,164 @@ void setup()
 
     //BUTTONS
     buttons.addButton("Export")
-    .setFont(font)
-    .setValue(100)
-    .setPosition(20,80)
-    .setSize(200,25)
-    ;
+      .setFont(font)
+      .setValue(100)
+      .setPosition(20,80)
+      .setSize(200,25)
+      ;
     
     buttons.addButton("Angles")
-    .setFont(font)
-    .setValue(100)
-    .setPosition(20,120)
-    .setSize(200,25)
-    ;
+      .setFont(font)
+      .setValue(100)
+      .setPosition(20,120)
+      .setSize(200,25)
+      ;
     
     buttons.addButton("Logs")
-    .setFont(font)
-    .setValue(100)
-    .setPosition(20,160)
-    .setSize(200,25)
-    ;
+      .setFont(font)
+      .setValue(100)
+      .setPosition(20,160)
+      .setSize(200,25)
+      ;
     
     buttons.addButton("Reset")
-    .setFont(font)
-    .setValue(100)
-    .setPosition(20,200)
-    .setSize(200,25)
-    ;
+      .setFont(font)
+      .setValue(100)
+      .setPosition(20,200)
+      .setSize(200,25)
+      ;
     
-    buttons.addButton("window")
-    .setFont(font)
-    .setValue(100)
-    .setPosition(20,240)
-    .setSize(200,25)
-    ;
+    buttons.addButton("Window")
+      .setFont(font)
+      .setValue(100)
+      .setPosition(20,240)
+      .setSize(200,25)
+      ;
     
    //INPUT TEXT
     angle_input.addTextfield("INPUT")
-       .setPosition(20,20)
-       .setSize(200,30) //x, y size
-       .setFont(font)
-       .setAutoClear(true) //auto set to true, not necessary to call
-       .setFocus(true) //no clue wtf this does
-       .setColor(color(255,0,0))
-       ;
+      .setPosition(20,20)
+      .setSize(200,30) //x, y size
+      .setFont(font)
+      .setAutoClear(true) //auto set to true, not necessary to call
+      .setFocus(true) //no clue wtf this does
+      .setColor(color(255,0,0))
+      ;
    
    //LOG TEXT
     displayLogs = logz.addTextarea("logs")
-                    .setPosition(250,40)
-                    .setSize(290,200)
-                    .setFont(createFont("arial", 16))
-                    .setColor(color(128))
-                    .setColorBackground(color(255,100))
-                    .setColorForeground(color(255,100))
-                   // .setText(update_text);
-                    ;
+                      .setPosition(250,40)
+                      .setSize(290,200)
+                      .setFont(createFont("arial", 16))
+                      .setColor(color(128))
+                      .setColorBackground(color(255,100))
+                      .setColorForeground(color(255,100))
+                    // .setText(update_text);
+                      ;
     
     //DEGREE TEXT   
     displayDegrees = degValues.addTextarea("my_degrees")
-                    .setPosition(560, 40)
-                    .setSize(140,200)
-                    .setFont(createFont("arial", 16))
-                    .setColor(color(128))
-                    .setColorBackground(color(255,100))
-                    .setColorForeground(color(255,100))
-                    .setText("test")
-                    ;
+                      .setPosition(560, 40)
+                      .setSize(140,200)
+                      .setFont(createFont("arial", 16))
+                      .setColor(color(128))
+                      .setColorBackground(color(255,100))
+                      .setColorForeground(color(255,100))
+                      .setText("test")
+                      ;
     textFont(font);
   }
-  
-//========================DRAW==========================//
+
+//====================================DRAW====================================//
 void draw() 
   {
-    background(0);
-    fill(255);
+  background(0);
+  fill(255);
     
-    //System clock
-    runningTimer();
+  //System clock
+  runningTimer();
     
-    //Text area updates
-    displayLogs.setText(update_text);
+  //Text area updates
+  displayLogs.setText(update_text);
+  displayDegrees.setText(update_degtext);
+
+  //Arrow on screen
+  fill(130);
+  rect(250,250,200,200);
+  drawArrow(350,350, 80, deg_angle);
+  }
+
+//=============================CUSTOM FUNCTIONS===============================//
+/* 
+ *Detailed documentation is included in the GitHub wiki. Minor comments are made
+ *in each to give a brief synopsis. 
+ */
+
+void Export()
+  /*
+  * Exports values stored in StringList degrees into a text file seperated by 
+  * lines. 
+  */
+  {
+  if (degrees.size() > 0) //Making sure list not 0
+    {
+    for (int i = 0; i < degrees.size(); i++) //All items in list
+      {
+      output.println(degrees.get(i)); //Write to each line in file
+      }
+    output.flush();
+    output.close();
+    exit(); //this is optional; exit() stops the GUI
+    }
+  }
+
+void Window()
+ /*
+  * Opens a pop-up window
+  */
+  {
+  count += 1; //See GitHub issues page
+  if (count == 2)
+    {
+    if(win == null) win = new PWindow();
+    count = 1;
+    }
+  }
+
+void Logs(float theValue)
+  {
+  //Clears animal log and clears displayLogs textarea
+  animals.clear();
+  update_text = ("");
+  displayLogs.setText(update_text);
+  }
+
+void Angles(float theValue)
+  {
+    //Clears degree log and clears displayDegrees textarea
+    degrees.clear();
+    update_degtext = ("");
     displayDegrees.setText(update_degtext);
-    
-    //Arrow on screen
-    fill(130);
-    rect(250,250,200,200);
+  }
+
+void Reset(float theValue)
+  {
+    //Reset animal log
+    animals.clear();
+    update_text = ("");
+    displayLogs.setText(update_text);
+      
+    //Reset degrees
+    degrees.clear();
+    update_degtext = ("");
+    displayDegrees.setText(update_degtext);
+
+    //Reset arrow
+    deg_angle = 0;
     drawArrow(350,350, 80, deg_angle);
   }
 
-//===========================FUNCTIONS============================//
-/* Every function activates when the button correseponding with it's name is
- * pressed. This is how handlers work in ControlP5.
- *
- */
-  void Export(float theValue) //Used for File I/O
-    {
-      if (degrees.size() > 0) //Making sure list not 0
-        {
-        for (int i = 0; i < degrees.size(); i++)
-          {
-            output.println(degrees.get(i)); //For each item, writing to a line in txt file.
-          }
-          output.flush();
-          output.close();
-          exit(); //this is optional; exit() stops the GUI
-        }
-    }
-  void window()
-    {
-    count += 1;
-    if (count == 2)
-      {
-      if(win == null) win = new PWindow();
-      count = 1;
-      }
-    }
-
-  void Logs(float theValue)
-    {
-      //reset animal log
-      animals.clear();
-      update_text = ("");
-      displayLogs.setText(update_text);
-    }
-
-  void Angles(float theValue)
-    {
-      degrees.clear();
-      update_degtext = ("");
-      displayDegrees.setText(update_degtext);
-    }
-
-  void Reset(float theValue)
-    {
-      println("reset pressed");
-      
-      //Reset animal log
-      animals.clear();
-      update_text = ("");
-      displayLogs.setText(update_text);
-      
-      //Reset degrees
-      degrees.clear();
-      update_degtext = ("");
-      displayDegrees.setText(update_degtext);
-
-      //Reset arrow
-      deg_angle = 0;
-      drawArrow(350,350, 80, deg_angle);
-    }
-  void INPUT(String raw_angle)
+void INPUT(String raw_angle)
     {
       //deg_angle used for arrow
       float rad_angle = Float.valueOf(raw_angle);
@@ -205,13 +215,13 @@ void draw()
       //println(update_degtext);
     }
 
-  void updateAnimals(Integer degree)
+void updateAnimals(Integer degree)
     {
       animals.append("Animal ID found at " + String.valueOf(degree));
       update_text = String.join(", ", animals);
     }
 
-  void updateDegrees(Integer degree)
+void updateDegrees(Integer degree)
     {
      degrees.append(String.valueOf(degree));
      update_degtext = String.join(", ", degrees);
