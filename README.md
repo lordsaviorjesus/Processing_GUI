@@ -16,13 +16,15 @@ Some comments are included in the ".pde" file, however more extensive documenati
 3. Download ControlP5 using the library manager in Processing.
 4. Run application
 
-Running the GUI should be as simple as running the .pde file provided you have Processing 3 installed as well as ControlP5. 
+Running the GUI should be as simple as running the .pde file, provided you have Processing 3 installed as well as ControlP5. 
 
 ### Windows/Mac Application
 1. Follow all steps in Processing installation listed above.
 2. File > Export Application > Export
 
 ## Usage
+
+### Features
 **Work in progress**
 
 ## License
@@ -30,11 +32,13 @@ License used is MIT's open source license, as seen in the main branch.
 
 ## Helpful Links and Resources
 
-Below is a list of helpful resources and links that further explain Processing 3's language as well as how the library ControlP5 works. 
+Below is a list of helpful resources and links.
 
-- processing
-- controlp5
-- etc
+- [Processing 3](https://processing.org/reference/)
+- [Processing commmunity forums](https://discourse.processing.org/)
+- [ControlP5](http://www.sojamo.de/libraries/controlP5/)
+- [GUI Wiki Page](https://github.com/lordsaviorjesus/Processing_GUI/wiki)
+- 
 
 ## Contact
 For pressing issues, email ajsoto@calpoly.edu with the subject, "PROCESSING GUI".

@@ -48,35 +48,30 @@ void setup()
       .setPosition(20,80)
       .setSize(200,25)
       ;
-    
     buttons.addButton("Angles")
       .setFont(font)
       .setValue(100)
       .setPosition(20,120)
       .setSize(200,25)
       ;
-    
     buttons.addButton("Logs")
       .setFont(font)
       .setValue(100)
       .setPosition(20,160)
       .setSize(200,25)
       ;
-    
     buttons.addButton("Reset")
       .setFont(font)
       .setValue(100)
       .setPosition(20,200)
       .setSize(200,25)
       ;
-    
     buttons.addButton("Window")
       .setFont(font)
       .setValue(100)
       .setPosition(20,240)
       .setSize(200,25)
       ;
-    
    //INPUT TEXT
     angle_input.addTextfield("INPUT")
       .setPosition(20,20)
@@ -89,25 +84,25 @@ void setup()
    
    //LOG TEXT
     displayLogs = logz.addTextarea("logs")
-                      .setPosition(250,40)
-                      .setSize(290,200)
-                      .setFont(createFont("arial", 16))
-                      .setColor(color(128))
-                      .setColorBackground(color(255,100))
-                      .setColorForeground(color(255,100))
-                    // .setText(update_text);
-                      ;
+      .setPosition(250,40)
+      .setSize(290,200)
+      .setFont(createFont("arial", 16))
+      .setColor(color(128))
+      .setColorBackground(color(255,100))
+      .setColorForeground(color(255,100))
+      // .setText(update_text);
+      ;
     
     //DEGREE TEXT   
     displayDegrees = degValues.addTextarea("my_degrees")
-                      .setPosition(560, 40)
-                      .setSize(140,200)
-                      .setFont(createFont("arial", 16))
-                      .setColor(color(128))
-                      .setColorBackground(color(255,100))
-                      .setColorForeground(color(255,100))
-                      .setText("test")
-                      ;
+      .setPosition(560, 40)
+      .setSize(140,200)
+      .setFont(createFont("arial", 16))
+      .setColor(color(128))
+      .setColorBackground(color(255,100))
+      .setColorForeground(color(255,100))
+      .setText("test")
+      ;
     textFont(font);
   }
 
@@ -257,8 +252,10 @@ class PWindow extends PApplet
   }
 
   ControlP5 demoButton;
+  ControlP5 buttons;
   void setup() 
     {
+      buttons = new ControlP5(this);
       demoButton = new ControlP5(this);
       demoButton.addButton("demo")
           .setPosition(20,20)
