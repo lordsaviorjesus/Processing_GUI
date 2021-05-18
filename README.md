@@ -23,6 +23,7 @@ Running the GUI should be as simple as running the .pde file, provided you have 
 2. File > Export Application > Export
 
 ## Usage
+**Work in progress**
 
 ### Features
 **Work in progress**
@@ -41,4 +42,4 @@ Below is a list of helpful resources and links.
 - 
 
 ## Contact
-For pressing issues, email ajsoto@calpoly.edu with the subject, "PROCESSING GUI".
+For pressing issues, email ajsoto@calpoly.edu with the subject line, "PROCESSING GUI".

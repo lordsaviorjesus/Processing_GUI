@@ -52,7 +52,7 @@ void setup()
       .setFont(font)
       .setValue(100)
       .setPosition(20,120)
-      .setSize(200,25)
+      .setSize(200,25) 
       ;
     buttons.addButton("Logs")
       .setFont(font)
@@ -107,15 +107,20 @@ void setup()
   }
 
 //====================================DRAW====================================//
-void draw() 
+void draw()
+/*
+ * Draw is a looping function
+ *
+ */
   {
+  //Basic Processing initializations
   background(0);
   fill(255);
-    
+
   //System clock
   runningTimer();
-    
-  //Text area updates
+
+  //These continuously update Logs and Degrees
   displayLogs.setText(update_text);
   displayDegrees.setText(update_degtext);
 
