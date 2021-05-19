@@ -68,7 +68,7 @@ void setup()
       ;
     buttons.addButton("Window")
       .setFont(font)
-      .setValue(100)
+      .setValue(100) //this is for values to be assigned if desired
       .setPosition(20,240)
       .setSize(200,25)
       ;
@@ -109,8 +109,9 @@ void setup()
 //====================================DRAW====================================//
 void draw()
 /*
- * Draw is a looping function
- *
+ * Draw is a looping function that repeats over and over. The main important 
+ * functions that are looping are update_degtext and update_text, which control
+ * what text is shown in the textareas.
  */
   {
   //Basic Processing initializations
@@ -118,9 +119,9 @@ void draw()
   fill(255);
 
   //System clock
-  runningTimer();
+  runningTimer(); //See GitHub for issues
 
-  //These continuously update Logs and Degrees
+  //Updating textareas
   displayLogs.setText(update_text);
   displayDegrees.setText(update_degtext);
 
@@ -132,8 +133,12 @@ void draw()
 
 //=============================CUSTOM FUNCTIONS===============================//
 /* 
- *Detailed documentation is included in the GitHub wiki. Minor comments are made
- *in each to give a brief synopsis. 
+ * Detailed documentation is included in the GitHub wiki. Minor comments are 
+ * made in each to give a brief synopsis. 
+ *
+ * Note:
+ * float theValue can be inserted in function arguments. .setValue() in
+ * initialization controls this.
  */
 
 void Export()
@@ -150,13 +155,15 @@ void Export()
       }
     output.flush();
     output.close();
-    exit(); //this is optional; exit() stops the GUI
+    exit(); //this is optional; exit() closes the GUI
     }
   }
 
 void Window()
  /*
-  * Opens a pop-up window
+  * Opens a pop-up window. Pop up window properties are controlled in the class
+  * located at the bottom of the sketch. See GitHub issues page for issues with
+  * resizing the popup window.
   */
   {
   count += 1; //See GitHub issues page
@@ -167,7 +174,11 @@ void Window()
     }
   }
 
-void Logs(float theValue)
+void Logs()
+/* 
+ * Clears text in logs textarea.
+ *
+ */
   {
   //Clears animal log and clears displayLogs textarea
   animals.clear();
@@ -175,15 +186,20 @@ void Logs(float theValue)
   displayLogs.setText(update_text);
   }
 
-void Angles(float theValue)
+void Angles()
+ /*
+  * Clears text in degrees textarea and list.
+  */
   {
-    //Clears degree log and clears displayDegrees textarea
     degrees.clear();
     update_degtext = ("");
     displayDegrees.setText(update_degtext);
   }
 
-void Reset(float theValue)
+void Reset()
+/*
+ * Resets all textareas and StringLists.
+ */
   {
     //Reset animal log
     animals.clear();
@@ -201,33 +217,56 @@ void Reset(float theValue)
   }
 
 void INPUT(String raw_angle)
+/*
+ * Takes input from user and updates animal and degree list with radian angles.
+ * 
+ * Args:
+ *     String raw_angle: raw angle in radians
+ */
     {
       //deg_angle used for arrow
       float rad_angle = Float.valueOf(raw_angle);
       deg_angle = int((180/3.14) * rad_angle);
-      
+
       //updating animal and degree lists
       updateAnimals(deg_angle);
       updateDegrees(deg_angle);
-      
-      //println("degree int value is - ", deg_angle);
-      //println("input registered", raw_angle);
-      //println(update_degtext);
     }
 
 void updateAnimals(Integer degree)
+/*
+ * Updates animals list with hypothetical animal id. Not implemented yet.
+ *
+ * Args:
+ *     Integer degree: degree value of angle
+ */ 
     {
       animals.append("Animal ID found at " + String.valueOf(degree));
       update_text = String.join(", ", animals);
     }
 
 void updateDegrees(Integer degree)
+/*
+ * Updates degree list with degree value.
+ *
+ * Args:
+ *     Integer degree: degree value of radian.
+ */
     {
      degrees.append(String.valueOf(degree));
      update_degtext = String.join(", ", degrees);
     }
   
 public void drawArrow(int cx, int cy, int len, float angle)
+/*
+ * Updates arrow that points in the direction of the animal.
+ *
+ * Args:
+ *     int cx: initial x position.
+ *     int cy: initial y position.
+ *     int len: length of arrow.
+ *     float angle: angle to rotate arrow.
+ */
   {
     pushMatrix();
     translate(cx, cy);
@@ -239,6 +278,9 @@ public void drawArrow(int cx, int cy, int len, float angle)
   }
 
 public void runningTimer()
+/*
+ * Timer that runs in the top right corner. Runs off OS system clock.
+ */
   {
     int s = second(); 
     int m = minute(); 
@@ -247,31 +289,34 @@ public void runningTimer()
     text("System time: " + h + ":" + m + ":" + s, 550,25);
   }
 
-//================POP-UP WINDOW==================//
-class PWindow extends PApplet 
+//==================================POP-UP WINDOW=============================//
+
+ /* It's not necessary to understand how the class works to make the window, this
+  * code is copy/paste friendly to create a pop up window.
+  */
+
+//----------------------------------------------------------------------------//
+class PWindow extends PApplet
 {
   PWindow()
   {
     super();
     PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, this);
   }
-
-  ControlP5 demoButton;
+//----------------------------------------------------------------------------//
+ 
   ControlP5 buttons;
   void setup() 
     {
+      PFont font = createFont("arial",15);
       buttons = new ControlP5(this);
-      demoButton = new ControlP5(this);
-      demoButton.addButton("demo")
+      buttons.addButton("demo")
+          .setFont(font)
           .setPosition(20,20)
           .setSize(100,30)
           ;
       background(150);
       surface.setResizable(true);
-    }
-  void demo()
-    {
-      println("demo button was pressed");
     }
 
   void draw()
@@ -280,14 +325,17 @@ class PWindow extends PApplet
       ellipse(mouseX, mouseY, 10, 10); //Tracks mouse
     }
 
-  //void mousePressed() 
-    //{
-     // println("mousePressed in secondary window");
-   // }
-
-  void exit()
+  void demo()
     {
-      dispose();
-      win = null;
+      println("demo button was pressed");
+    }
+  void exit()
+  /*
+   * This function makes it so when the window is closed, the main GUI window
+   * does not close.
+   */
+    {
+      dispose(); //basically means close()
+      win = null; //prevents entire GUI from closing
     }
 }
