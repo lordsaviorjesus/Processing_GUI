@@ -39,7 +39,15 @@ Below is a list of helpful resources and links.
 - [Processing commmunity forums](https://discourse.processing.org/)
 - [ControlP5](http://www.sojamo.de/libraries/controlP5/)
 - [GUI Wiki Page](https://github.com/lordsaviorjesus/Processing_GUI/wiki)
-- 
+
+### Useful Serial Links
+
+Here are some references for serial communcation links, both for Arduino and generic transcievers.
+
+- [Arduino to Processing Serial Communication](https://www.instructables.com/Arduino-to-Processing-Serial-Communication-withou/)
+- [Processing 3 Serial Documentation](https://processing.org/reference/libraries/serial/Serial.html)
+- [SparkFun Connecting Arduino to Processing](https://learn.sparkfun.com/tutorials/connecting-arduino-to-processing/to-processing)
+
 
 ## Contact
 For pressing issues, email ajsoto@calpoly.edu with the subject line, "PROCESSING GUI".
