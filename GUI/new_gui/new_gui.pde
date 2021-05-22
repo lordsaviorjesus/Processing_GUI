@@ -28,6 +28,7 @@ Textarea displayDegrees;
 //====================================SETUP===================================//
 void setup() 
   {
+    //PROCESSING 3 INITIALIZATIONS
     size(720,540);
     PFont font = createFont("arial",15);
     surface.setResizable(true);
