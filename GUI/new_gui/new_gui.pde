@@ -79,7 +79,7 @@ void setup()
       .setSize(200,30) //x, y size
       .setFont(font)
       .setAutoClear(true) //auto set to true, not necessary to call
-      .setFocus(true) //no clue wtf this does
+      .setFocus(true) //look up documentation
       .setColor(color(255,0,0))
       ;
    
@@ -222,7 +222,7 @@ void INPUT(String raw_angle)
  * Takes input from user and updates animal and degree list with radian angles.
  * 
  * Args:
- *     String raw_angle: raw angle in radians
+ *     (String) raw_angle: raw angle in radians
  */
     {
       //deg_angle used for arrow
@@ -239,7 +239,7 @@ void updateAnimals(Integer degree)
  * Updates animals list with hypothetical animal id. Not implemented yet.
  *
  * Args:
- *     Integer degree: degree value of angle
+ *     (Integer) degree: degree value of angle
  */ 
     {
       animals.append("Animal ID found at " + String.valueOf(degree));
@@ -251,7 +251,7 @@ void updateDegrees(Integer degree)
  * Updates degree list with degree value.
  *
  * Args:
- *     Integer degree: degree value of radian.
+ *     (Integer) degree: degree value of radian.
  */
     {
      degrees.append(String.valueOf(degree));
@@ -263,10 +263,10 @@ public void drawArrow(int cx, int cy, int len, float angle)
  * Updates arrow that points in the direction of the animal.
  *
  * Args:
- *     int cx: initial x position.
- *     int cy: initial y position.
- *     int len: length of arrow.
- *     float angle: angle to rotate arrow.
+ *     (int) cx: initial x position.
+ *     (int) cy: initial y position.
+ *     (int) len: length of arrow.
+ *     (float) angle: angle to rotate arrow.
  */
   {
     pushMatrix();
