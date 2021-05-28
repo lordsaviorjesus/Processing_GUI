@@ -1,9 +1,11 @@
 /*
  * Gui by augustus soto
  */
+//More info about ControlP5 documentation on the GitHub.
+import controlP5.*;
+import processing.serial.*;
 
 //=================================VARIABLES==================================//
-import controlP5.*;
 
 //Processing definitions
 StringList animals;
@@ -292,8 +294,7 @@ public void runningTimer()
 
 //==================================POP-UP WINDOW=============================//
 
- /* It's not necessary to understand how the class works to make the window, this
-  * code is copy/paste friendly to create a pop up window.
+ /* This class definition is copy/paste friendly.
   */
 
 //----------------------------------------------------------------------------//
