@@ -307,30 +307,76 @@ class PWindow extends PApplet
     PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, this);
   }
 //----------------------------------------------------------------------------//
- 
+  Serial recvPort;
+  int portValue;
   ControlP5 buttons;
+  ControlP5 serialInfo;
+  Textarea displaySerial;
   void setup() 
     {
+      //Basic Setup
       PFont font = createFont("arial",15);
       buttons = new ControlP5(this);
+      serialInfo = new ControlP5(this);
+
+      displaySerial = serialInfo.addTextarea("Info")
+        //.setText("Test")
+        .setFont(font)
+        .setPosition(150,20)
+        .setSize(300,200)
+        .setColor(color(128))
+        .setColorBackground(color(255,100))
+        .setColorForeground(color(255,100))
+        ;
       buttons.addButton("demo")
-          .setFont(font)
-          .setPosition(20,20)
-          .setSize(100,30)
-          ;
+        .setFont(font)
+        .setPosition(20,20)
+        .setSize(100,30)
+        .setColorBackground(color(255,100))
+        .setColorForeground(color(255,100))
+        ;
+    
       background(150);
       surface.setResizable(true);
+  
+
+      //Serial Port Information
+      /*This generally opens COM1, which is where the device is connected. This
+       * could potentially be different, so change [num] if necessary.    
+       */
+      String portName = Serial.list()[1]; //If nothing recieved, change [num]
+      recvPort = new Serial(this, portName, 9600);
     }
 
   void draw()
     {
       background(0);
       ellipse(mouseX, mouseY, 10, 10); //Tracks mouse
+      rect(20,60,100,30);
+      recieveSerial();
     }
 
+  void recieveSerial()
+    {
+     if (recvPort.available() > 0)      //If data is available...
+        {
+          portValue = recvPort.read();   //Read and store value
+        }
+      if (portValue == 0)
+        {
+          displaySerial.setText("Reading serial...");
+          fill(0);
+        }
+      else
+        {
+          displaySerial.setText("Test working!");
+          fill(255);
+        }
+    }
   void demo()
     {
       println("demo button was pressed");
+      fill(255);
     }
   void exit()
   /*

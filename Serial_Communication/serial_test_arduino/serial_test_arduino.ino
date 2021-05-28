@@ -9,7 +9,7 @@ void loop()
   {
     if (digitalRead(switchPin) == LOW) 
       {                                // If switch is ON,
-        Serial.write(1);               // send 1 to Processing
+        Serial.write(2);               // send 1 to Processing
       } 
     else 
       {                                // If the switch is not ON,
