@@ -344,7 +344,7 @@ class PWindow extends PApplet
       /*This generally opens COM1, which is where the device is connected. This
        * could potentially be different, so change [num] if necessary.    
        */
-      String portName = Serial.list()[1]; //If nothing recieved, change [num]
+      String portName = Serial.list()[0]; //If nothing recieved, change [num] to 1,2,3, etc
       recvPort = new Serial(this, portName, 9600);
     }
 
